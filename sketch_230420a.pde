@@ -9,33 +9,63 @@ class Stripe {
     h = _h;
   }
 
-  void display() {
+  void display(float x, float t, float scale) {
+    float distortion = sin((y + t) * 0.05) * 10 * scale;
     fill(c);
-    rect(200, y, 400, h);
+    rect(x - distortion, y, w + distortion * 2, h);
   }
 }
 
-void setup() {
-  size(800, 400);
+ArrayList<Stripe[]> flags = new ArrayList<Stripe[]>();
+float flagSpeed = 8; // controls horizontal movement speed
+float flagScale = 1; // controls how much the flag warps
+float flagTime = 1.5; // keeps track of time for wave-like motion
 
-  color[] stripeColors = {
-    color(255, 0, 0),    // red
-    color(255, 165, 0),  // orange
-    color(255, 255, 0),  // yellow
-    color(0, 255, 0),    // green
-    color(0, 0, 255),    // blue
-    color(128, 0, 128)   // violet
+void setup() {
+  size(1900, 800);
+
+  color[][] stripeColors = {
+    { color(255, 0, 0),    // red
+      color(255, 165, 0),  // orange
+      color(255, 255, 0),  // yellow
+      color(0, 255, 0),    // green
+      color(0, 0, 255),    // blue
+      color(128, 0, 128) }, // violet
+    
+    { color(255, 255, 255),
+    color(255, 255, 255),
+    color(255, 255, 255),
+    color(255, 255, 255),
+    color(255, 255, 255),
+    color(255, 255, 255),
+    }
   };
 
-  float stripeHeight = height / stripeColors.length;
-  Stripe[] stripes = new Stripe[stripeColors.length];
-  for (int i = 0; i < stripes.length; i++) {
-    float y = i * stripeHeight;
-    stripes[i] = new Stripe(stripeColors[i], y, width, stripeHeight);
+  float stripeHeight = height / 2.0 / stripeColors[0].length;
+  float flagWidth = width / 5.0;
+  for (int i = 0; i < 10; i++) {
+    Stripe[] stripes = new Stripe[stripeColors[i % stripeColors.length].length];
+    for (int j = 0; j < stripes.length; j++) {
+      float y = j * stripeHeight;
+      stripes[j] = new Stripe(stripeColors[i % stripeColors.length][j], y, flagWidth, stripeHeight);
+    }
+    flags.add(stripes);
   }
 
   noStroke();
-  for (Stripe stripe : stripes) {
-    stripe.display();
+}
+
+void draw() {
+  background(0);
+
+  float flagWidth = width / 5.0;
+  for (int i = 0; i < flags.size(); i++) {
+    Stripe[] stripes = flags.get(i);
+    float flagX = i * flagWidth + flagTime * flagSpeed;
+    for (Stripe stripe : stripes) {
+      stripe.display(flagX, flagTime, flagScale);
+    }
   }
+
+  flagTime += 0.1; // increment time for wave-like motion
 }
