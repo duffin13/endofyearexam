@@ -12,12 +12,12 @@ class Stripe {
   void display(float x, float t, float scale) {
     float distortion = sin((y + t) * 0.05) * 10 * scale;
     fill(c);
-    rect(x - distortion, y, w + distortion * 2, h);
+    rect(x - distortion, y + 200, w + distortion * 2, h);
   }
 }
 
 ArrayList<Stripe[]> flags = new ArrayList<Stripe[]>();
-float flagSpeed = 8; // controls horizontal movement speed
+float flagSpeed = 12; // controls horizontal movement speed
 float flagScale = 1; // controls how much the flag warps
 float flagTime = 1.5; // keeps track of time for wave-like motion
 
@@ -32,17 +32,17 @@ void setup() {
       color(0, 0, 255),    // blue
       color(128, 0, 128) }, // violet
     
-    { color(255, 255, 255),
-    color(255, 255, 255),
-    color(255, 255, 255),
-    color(255, 255, 255),
-    color(255, 255, 255),
-    color(255, 255, 255),
-    }
+     { color(255, 0, 0),    // red
+      color(255, 165, 0),  // orange
+      color(255, 255, 0),  // yellow
+      color(0, 255, 0),    // green
+      color(0, 0, 255),    // blue
+      color(128, 0, 128) }, // violet
+  
   };
 
   float stripeHeight = height / 2.0 / stripeColors[0].length;
-  float flagWidth = width / 5.0;
+  float flagWidth = width / 7.0;
   for (int i = 0; i < 10; i++) {
     Stripe[] stripes = new Stripe[stripeColors[i % stripeColors.length].length];
     for (int j = 0; j < stripes.length; j++) {
@@ -52,11 +52,10 @@ void setup() {
     flags.add(stripes);
   }
 
-  noStroke();
 }
 
 void draw() {
-  background(0);
+  background(100);
 
   float flagWidth = width / 5.0;
   for (int i = 0; i < flags.size(); i++) {
