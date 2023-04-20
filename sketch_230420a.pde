@@ -41,8 +41,8 @@ void setup() {
   
   };
 
-  float stripeHeight = height / random(7.0) / stripeColors[0].length;
-  float flagWidth = width / random(7.0);
+  float stripeHeight = height / random(5.0) / stripeColors[0].length;
+  float flagWidth = width / random(5.0);
   for (int i = 0; i < 10; i++) {
     Stripe[] stripes = new Stripe[stripeColors[i % stripeColors.length].length];
     for (int j = 0; j < stripes.length; j++) {
@@ -57,7 +57,7 @@ void setup() {
 void draw() {
   background(100);
 
-  float flagWidth = width / random(7.0);
+  float flagWidth = width / random(5.0);
   for (int i = 0; i < flags.size(); i++) {
     Stripe[] stripes = flags.get(i);
     float flagX = i * flagWidth + flagTime * flagSpeed;
