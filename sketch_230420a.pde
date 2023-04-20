@@ -18,8 +18,8 @@ class Stripe {
 
 ArrayList<Stripe[]> flags = new ArrayList<Stripe[]>();
 float flagSpeed = 12; // controls horizontal movement speed
-float flagScale = 1; // controls how much the flag warps
-float flagTime = 1.5; // keeps track of time for wave-like motion
+float flagScale = 5; // controls how much the flag warps
+float flagTime = 5; // keeps track of time for wave-like motion
 
 void setup() {
   size(1900, 800);
@@ -41,8 +41,8 @@ void setup() {
   
   };
 
-  float stripeHeight = height / 2.0 / stripeColors[0].length;
-  float flagWidth = width / 7.0;
+  float stripeHeight = height / random(7.0) / stripeColors[0].length;
+  float flagWidth = width / random(7.0);
   for (int i = 0; i < 10; i++) {
     Stripe[] stripes = new Stripe[stripeColors[i % stripeColors.length].length];
     for (int j = 0; j < stripes.length; j++) {
@@ -57,12 +57,12 @@ void setup() {
 void draw() {
   background(100);
 
-  float flagWidth = width / 5.0;
+  float flagWidth = width / random(7.0);
   for (int i = 0; i < flags.size(); i++) {
     Stripe[] stripes = flags.get(i);
     float flagX = i * flagWidth + flagTime * flagSpeed;
     for (Stripe stripe : stripes) {
-      stripe.display(flagX, flagTime, flagScale);
+      stripe.display(flagX, random(flagTime), random(flagScale));
     }
   }
 
